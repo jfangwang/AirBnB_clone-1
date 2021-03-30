@@ -17,7 +17,7 @@ from models.base_model import BaseModel
 
 
 # Dictionary to store available and known classes
-class_list= ["BaseModel",
+class_list = ["BaseModel",
               "State",
               "City",
               "Amenity",
@@ -36,6 +36,7 @@ def reset(self):
     except:
         pass
     FileStorage.__objects = {}
+
 
 class dummyTest(unittest.TestCase):
     """Dummy Test Cases for testing purposes, not real tests"""
@@ -58,7 +59,7 @@ class dummyTest(unittest.TestCase):
             models.storage.reload()
         except:
             pass
-    
+
     def test_cmdPrompt(self):
         """idk"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -94,8 +95,8 @@ class dummyTest(unittest.TestCase):
                 HBNBCommand().onecmd("create {}".format(command))
                 key = "{}.{}".format(command, f.getvalue().strip())
                 self.assertIn(key, str(storage.all().keys()))
-                self.assertEqual(None, HBNBCommand().onecmd("count {}".format(a))) 
-
+                self.assertEqual(None, HBNBCommand().onecmd("count {}"
+                                                            .format(a)))
 
 
 class command_prompt(unittest.TestCase):
