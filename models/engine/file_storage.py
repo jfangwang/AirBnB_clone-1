@@ -34,7 +34,7 @@ class FileStorage:
             for key, value in self.__objects.items():
                 if isinstance(value, cls):
                     new_objs[key] = value
-                return new_objs
+            return new_objs
         return self.__objects
 
     def new(self, obj):
