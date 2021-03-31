@@ -62,9 +62,6 @@ class DBStorage:
             new_dict[key] = obj
         return new_dict
             
-        key = "{}.{}".
-        return new_dict
-
     def close(self):
         """close current session"""
         self.__session.remove()
