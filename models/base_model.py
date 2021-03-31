@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
+import models
 # from models.amenity import Amenity
 # from models import City
 # from models import Place
@@ -31,16 +32,12 @@ class BaseModel:
         else:
             for key, val in kwargs.items():
                 """Convert from str to object"""
-                if key == 'updated_at':
+                if key == 'updated_at' or key == 'created_at':
                     val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
                 if key != '__class__':
                     setattr(self, key, val)
-            # kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-            #                                          '%Y-%m-%dT%H:%M:%S.%f')
-            # kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-            #                                          '%Y-%m-%dT%H:%M:%S.%f')
-            # del kwargs['__class__']
-            # self.__dict__.update(kwargs)
+            if 'id' not in kwargs or self.id is None:
+                self.id = str(uuid.uuid4())
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -51,8 +48,8 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
