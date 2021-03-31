@@ -1,5 +1,16 @@
 file.json
 !**/__pycache__/
+__pycache__/user.cpython-34.pyc
+engine/__pycache__/file_storage.cpython-34.pyc
+__pycache__/user.cpython-34.pyc
+__pycache__/state.cpython-34.pyc
+__pycache__/review.cpython-34.pyc
+__pycache__/place.cpython-34.pyc
+__pycache__/city.cpython-34.pyc
+__pycache__/base_model.cpython-34.pyc
+__pycache__/amenity.cpython-34.pyc
+__pycache__/__init__.cpython-34.pyc
 main_delete.py
 test_params_create
 *.pyc
+ models/__pycache*

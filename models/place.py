@@ -1,18 +1,46 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
+from models.amenity import Amenity
+metadata = Base.metadata
+
+place_amenity = Table('place_amenities', metadata
+                      Column('place_id', String(60), primary_key=True,
+                             ForeignKey('place.id'),
+                             nullable=False)
+                      Column('amenity_id', String(60), primary_key=True,
+                             ForeignKey('amenities.id')
+                             nullable=False))
 
 
 class Place(BaseModel):
     """ A place to stay """
-    city_id = ""
-    user_id = ""
-    name = ""
-    description = ""
-    number_rooms = 0
-    number_bathrooms = 0
-    max_guest = 0
-    price_by_night = 0
-    latitude = 0.0
-    longitude = 0.0
+    __tablename__ = 'places'
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    name = Column(String(128), nullable=False)
+    description = Column(String(1024), nullable=True)
+    number_rooms = Column(Integer, nullable=False, default=0)
+    number_bathrooms = Column(Integer, nullable=False, default=0)
+    max_guest = Column(Integer, nullable=False, default=0)
+    price_by_night = Column(Integer, nullable=False, default=0)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
     amenity_ids = []
+    reviews = relationship("Review", cascade="delete", backref="place")
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             viewonly=False)
+
+    @property
+    def amenities(self):
+        """Getter, may have to change this getter."""
+        return self.amenity_ids
+
+    @amenities.setter
+    def amenities(self, item):
+        """Accepts only Amenity Objects"""
+        if isinstance(item, Amenity):
+            self.amenity_ids.append(item.id)
+        return
