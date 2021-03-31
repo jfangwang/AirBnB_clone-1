@@ -2,8 +2,8 @@
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
 from models.city import City
-from sqlalchemy.orm import relationship, sessionmaker
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String
 
 
 class State(BaseModel, Base):
@@ -12,15 +12,16 @@ class State(BaseModel, Base):
     try:
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="all, delete")
+        cities = relationship("City", cascade="all, delete", backref="state")
 
+        @property
         def cities(self):
             """getter attr"""
-            import models
+            from models import storage
             new_list = []
-            for key, val in models.storage.all(City):
-                if val.state_id == self.id:
-                    new_list[key] = value
+            for key, val in storage.all(City).items():
+                if value.to_dict()['state_id'] == self.id:
+                    new_list.append(value)
             return new_list
     except:
         print("state did not work")

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ City Module for HBNB project """
 from models.base_model import BaseModel, Base
-from models.place import Place
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -11,7 +10,7 @@ class City(BaseModel):
     try:
         __tablename__ = 'cities'
         name = Column(String(128), nullable=False)
-        state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
-        places = relationship("Place", cascade="delete", backref="cities")
+        state_id = Column('state_id', String(60), ForeignKey("states.id"), nullable=False)
+        places = relationship("Place", cascade="all, delete", backref="cities")
     except:
         print("city did not work")

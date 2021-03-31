@@ -122,11 +122,10 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[str(args[0])]()
+        new_instance = HBNBCommand.classes[args[0]]()
         value = None
         attr = None
         for item in range(1, len(args)):
-            add_attr = True
             word = args[item].split('=')
             
             if len(word) == 2:
@@ -142,12 +141,8 @@ class HBNBCommand(cmd.Cmd):
                     elif '.' in value:
                         value = float(value)
                     else:
-                        try:
-                            value = int(value)
-                        except:
-                            add_attr = False
-                    if add_attr:
-                        setattr(new_instance, attr, value)
+                        value = int(value)
+                    setattr(new_instance, attr, value)
                 except:
                     pass
         print(new_instance.id)

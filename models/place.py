@@ -3,15 +3,17 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-metadata = Base.metadata
+from models.review import Review
 
 try:
-    place_amenity = Table('place_amenity', metadata,
+    place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
                                  ForeignKey('places.id'),
+                                 primary_key=True,
                                  nullable=False),
                           Column('amenity_id', String(60),
                                  ForeignKey('amenities.id'),
+                                 primary_key=True,
                                  nullable=False)
                         )
 except:
@@ -39,7 +41,7 @@ class Place(BaseModel):
     except:
         print("amen id does not work")
     try:
-        reviews = relationship("Review", cascade="delete", backref="place")
+        reviews = relationship("Review", cascade="all, delete", backref="place")
     except:
         print("revews does not work")
     # amenities = relationship("Amenity", secondary=place_amenity,
@@ -51,11 +53,10 @@ class Place(BaseModel):
             return self.amenity_ids
 
         @amenities.setter
-        def amenities(self, item):
+        def amenities(self, obj):
             """Accepts only Amenity Objects"""
-            from models.amenity import Amenity
-            if isinstance(item, Amenity):
-                self.amenity_ids.append(item.id)
+            if type(obj).__name__ == "Amenity":
+                self.amenity_ids.append(obj.id)
     except:
         print("setter not working")
 

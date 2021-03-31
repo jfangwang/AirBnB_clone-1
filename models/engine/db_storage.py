@@ -7,22 +7,23 @@ import json
 import os
 # import sqlalchemy
 from models.base_model import Base
-from models.user import User
-from models.place import Place
-from models.state import State
+# from models.user import User
+# from models.place import Place
+# from models.state import State
 from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+# from models.amenity import Amenity
+# from models.review import Review
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 # will not need if array.extend(iterable) method for session query list
-classes = {"User": User,
-           "Place": Place,
-           "State": State,
-           "City": City,
-           "Amenity": Amenity,
-           "Review": Review}
+classes = {"City": City}
+    # "User": User,
+    #        "Place": Place,
+    #        "State": State,
+           
+        #    "Amenity": Amenity,
+        #    "Review": Review}
 
 
 class DBStorage:
@@ -56,12 +57,12 @@ class DBStorage:
         models currently in storage"""
         try:
             query_results = []
-            query_results.extend(self.__session.query(User).all())
-            query_results.extend(self.__session.query(Place).all())
-            query_results.extend(self.__session.query(State).all())
+            # query_results.extend(self.__session.query(User).all())
+            # query_results.extend(self.__session.query(Place).all())
+            # query_results.extend(self.__session.query(State).all())
             query_results.extend(self.__session.query(City).all())
-            query_results.extend(self.__session.query(Amenity).all())
-            query_results.extend(self.__session.query(Review).all())
+            # query_results.extend(self.__session.query(Amenity).all())
+            # query_results.extend(self.__session.query(Review).all())
             new_dict = {}
             for obj in query_results:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
