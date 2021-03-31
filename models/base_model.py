@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
-# import models.storage import storage
 # from models.amenity import Amenity
 # from models import City
 # from models import Place
@@ -51,7 +50,7 @@ class BaseModel:
         from models import storage
         self.updated_at = datetime.now()
         storage.new(self)
-        self.save()
+        storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""

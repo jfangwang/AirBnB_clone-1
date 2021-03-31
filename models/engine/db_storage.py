@@ -32,23 +32,23 @@ class DBStorage:
 
     def __init__(self):
         """Instance of session and db_ojbect """
-        HBNB_MYSQL_USER = os.getenv['HBNB_MYSQL_USER']
-        HBNB_MYSQL_PWD = os.getenv['']
-        HBNB_MYSQL_HOST = os.getenv['']
-        HBNB_MYSQL_DB = os.getenv['']
-        HBNB_ENV = os.getenv['']
+        HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
+        HBNB_MYSQL_PWD = os.getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_HOST = os.getenv('HBNB_MYSQL_HOST')
+        HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
+        HBNB_ENV = os.getenv('HBNB_ENV')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
-        for obj in array:
-            key = "{}.{}".format(type(item).__name__, item.id)
+        # for obj in array:
+        #     key = "{}.{}".format(type(item).__name__, item.id)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
         
                                                                            
-    def all(self):
+    def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         return FileStorage.__objects
 
@@ -57,6 +57,7 @@ class DBStorage:
 
 
     def delete(self, ojb=None):
+        """delete"""
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
