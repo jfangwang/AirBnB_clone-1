@@ -1,17 +1,16 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from models.amenity import Amenity
 metadata = Base.metadata
 
-place_amenity = Table('place_amenities', metadata
-                      Column('place_id', String(60), primary_key=True,
+place_amenity = Table('place_amenities', metadata,
+                      Column('place_id', String(60),
                              ForeignKey('place.id'),
-                             nullable=False)
-                      Column('amenity_id', String(60), primary_key=True,
-                             ForeignKey('amenities.id')
+                             nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
                              nullable=False))
 
 
@@ -41,6 +40,6 @@ class Place(BaseModel):
     @amenities.setter
     def amenities(self, item):
         """Accepts only Amenity Objects"""
+        from models.amenity import Amenity
         if isinstance(item, Amenity):
             self.amenity_ids.append(item.id)
-        return
