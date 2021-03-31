@@ -34,6 +34,7 @@ class BaseModel:
                 """Convert from str to object"""
                 if key == 'updated_at' or key == 'created_at':
                     val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, key, val)
                 elif key != '__class__':
                     setattr(self, key, val)
             if 'id' not in kwargs or self.id is None:
