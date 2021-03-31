@@ -41,14 +41,16 @@ class DBStorage:
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB),pool_pre_ping=True)
+                                             HBNB_MYSQL_DB),
+                                      pool_pre_ping=True)
         self.reload()
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-        
+
     def all(self, cls=None):
-        """Returns dictionary result query of all models currently in storage"""
+        """Returns dictionary result query of all
+        models currently in storage"""
         query_results = []
         query_results.extend(self.__session.query(User).all())
         query_results.extend(self.__session.query(Place).all())
@@ -61,14 +63,10 @@ class DBStorage:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             new_dict[key] = obj
         return new_dict
-            
-        key = "{}.{}".
-        return new_dict
 
     def close(self):
         """close current session"""
         self.__session.remove()
-
 
     def delete(self, ojb=None):
         """detele obj from the current session"""
