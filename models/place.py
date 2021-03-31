@@ -35,12 +35,12 @@ class Place(BaseModel):
 
     @property
     def amenities(self):
-        """Getter"""
+        """Getter, may have to change this getter."""
         return self.amenity_ids
 
     @amenities.setter
     def amenities(self, item):
         """Accepts only Amenity Objects"""
         if isinstance(item, Amenity):
-            self.amenity_id.append(amenity_ids)
+            self.amenity_ids.append(item.id)
         return
