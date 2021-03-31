@@ -4,7 +4,7 @@ This module instantiates an object of class FileStorage or BDStorage
 """
 
 from models.engine.file_storage import FileStorage
-#from models.engine.db_storage import DBStorage
+from models.engine.db_storage import DBStorage
 from os import getenv
 
 
