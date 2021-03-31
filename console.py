@@ -128,25 +128,31 @@ class HBNBCommand(cmd.Cmd):
         for item in range(1, len(args)):
             add_attr = True
             word = args[item].split('=')
+            
             if len(word) == 2:
                 attr = word[0]
                 value = word[1]
-                if value[0] == '"' and value[len(value) - 1] == '"':
-                    value = value.split('"')
-                    value = value[1]
-                    value = value.replace("_", " ")
-                    value = value.replace('"', r'\"')
-                elif '.' in value:
-                    value = float(value)
-                else:
-                    try:
-                        value = int(value)
-                    except:
-                        add_attr = False
-                if add_attr:
-                    setattr(new_instance, attr, value)
+                try:
+                    if value[0] == '"' and value[len(value) - 1] == '"':
+                        value = value.split('"')
+                        value = value[1]
+                        value = value.replace("_", " ")
+                        value = value.replace('"', r'\"')
+        
+                    elif '.' in value:
+                        value = float(value)
+                    else:
+                        try:
+                            value = int(value)
+                        except:
+                            add_attr = False
+                    if add_attr:
+                        setattr(new_instance, attr, value)
+                except:
+                    pass
         print(new_instance.id)
         new_instance.save()
+                # print("{}, {}, {}".format(new_instance, attr, value))
 
     def help_create(self):
         """ Help information for the create method """
@@ -228,11 +234,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)

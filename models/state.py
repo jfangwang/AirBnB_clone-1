@@ -8,15 +8,19 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade="all, delete")
 
-    def cities(self):
-        """getter attr"""
-        import models
-        new_list = []
-        for key, val in models.storage.all(City):
-            if val.state_id == self.id:
-                new_list[key] = value
-        return new_list
+    try:
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state", cascade="all, delete")
+
+        def cities(self):
+            """getter attr"""
+            import models
+            new_list = []
+            for key, val in models.storage.all(City):
+                if val.state_id == self.id:
+                    new_list[key] = value
+            return new_list
+    except:
+        print("state did not work")

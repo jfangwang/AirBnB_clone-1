@@ -5,8 +5,8 @@ This module defines a class to manage file storage for hbnb clone
 
 import json
 import os
-import sqlalchemy
-from models.base_model import BaseModel, Base
+# import sqlalchemy
+from models.base_model import Base
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -32,37 +32,43 @@ class DBStorage:
 
     def __init__(self):
         """Instance of session and db_ojbect """
-        HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
-        HBNB_MYSQL_PWD = os.getenv('HBNB_MYSQL_PWD')
-        HBNB_MYSQL_HOST = os.getenv('HBNB_MYSQL_HOST')
-        HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
-        HBNB_ENV = os.getenv('HBNB_TYPE_STORAGE')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB),
-                                      pool_pre_ping=True)
-        self.reload()
+        try:
+            HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
+            HBNB_MYSQL_PWD = os.getenv('HBNB_MYSQL_PWD')
+            HBNB_MYSQL_HOST = os.getenv('HBNB_MYSQL_HOST')
+            HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
+            HBNB_ENV = os.getenv('HBNB_TYPE_STORAGE')
+            self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                        format(HBNB_MYSQL_USER,
+                                                HBNB_MYSQL_PWD,
+                                                HBNB_MYSQL_HOST,
+                                                HBNB_MYSQL_DB),
+                                        pool_pre_ping=True)
+            # self.reload()
 
-        if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+            if HBNB_ENV == "test":
+                Base.metadata.drop_all(self.__engine)
+        except:
+            print("Could not init session from db")
 
     def all(self, cls=None):
         """Returns dictionary result query of all
         models currently in storage"""
-        query_results = []
-        query_results.extend(self.__session.query(User).all())
-        query_results.extend(self.__session.query(Place).all())
-        query_results.extend(self.__session.query(State).all())
-        query_results.extend(self.__session.query(City).all())
-        query_results.extend(self.__session.query(Amenity).all())
-        query_results.extend(self.__session.query(Review).all())
-        new_dict = {}
-        for obj in query_results:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            new_dict[key] = obj
-        return new_dict
+        try:
+            query_results = []
+            query_results.extend(self.__session.query(User).all())
+            query_results.extend(self.__session.query(Place).all())
+            query_results.extend(self.__session.query(State).all())
+            query_results.extend(self.__session.query(City).all())
+            query_results.extend(self.__session.query(Amenity).all())
+            query_results.extend(self.__session.query(Review).all())
+            new_dict = {}
+            for obj in query_results:
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                new_dict[key] = obj
+            return new_dict
+        except:
+            print("all did not work")
 
     def close(self):
         """close current session"""
@@ -75,15 +81,37 @@ class DBStorage:
 
     def new(self, obj):
         """commits current state of session to the database"""
-        if obj:
-            self.__session.add()
+        try:
+            if obj:
+                self.__session.add()
+        except:
+            print("new does not work")
 
     def save(self):
         """commits current instance to the database"""
-        self.__session.commit()
+        try:
+            self.__session.commit()
+        except:
+            print("DB Storage save does not work")
 
     def reload(self):
         """  """
-        Base.metadata.create_all(self.__engine)
-        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(Session)
+        from models.base_model import Base
+        print(self.__engine)
+        try:
+            Base.metadata.create_all(self.__engine)
+        except:
+            print("1")
+        try:
+            Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        except:
+            print("2")
+        try:
+            willy = scoped_session(Session)
+        except:
+            print("3")
+        try:
+            self.__session = willy
+        except:
+            print("4")
+        
