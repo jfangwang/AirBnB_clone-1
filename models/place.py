@@ -19,10 +19,10 @@ try:
 except:
     print("place amenity did not work")
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     try:
-        __tablename__ = "places"
+        __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)

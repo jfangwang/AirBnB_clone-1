@@ -13,7 +13,7 @@ class User(BaseModel, Base):
         password = Column('password', String(128), nullable=False)
         first_name = Column('first_name', String(128), nullable=True)
         last_name = Column('last_name', String(128), nullable=True)
-        places = relationship("Place", cascade="all, delete", backref="user")
+        places = relationship('Place', cascade="all, delete", backref="user")
         reviews = relationship("Review", cascade="all, delete", backref="user")
     except:
         print("user did not work")

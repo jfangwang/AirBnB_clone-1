@@ -12,6 +12,6 @@ class Amenity(BaseModel, Base):
     try:
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
-        place_amenities = relationship("Place", secondary=place_amenity)
+        place_amenities = relationship('Place', secondary=place_amenity)
     except:
         print("amenity did not work")

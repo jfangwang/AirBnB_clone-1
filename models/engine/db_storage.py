@@ -8,8 +8,8 @@ import os
 # import sqlalchemy
 from models.base_model import Base
 # from models.user import User
-# from models.place import Place
-# from models.state import State
+from models.place import Place
+from models.state import State
 from models.city import City
 # from models.amenity import Amenity
 # from models.review import Review
@@ -17,10 +17,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 # will not need if array.extend(iterable) method for session query list
-classes = {"City": City}
+
+classes = {"Place": Place, "City": City, "State": State}
     # "User": User,
-    #        "Place": Place,
-    #        "State": State,
+           
+    #        
            
         #    "Amenity": Amenity,
         #    "Review": Review}
@@ -58,9 +59,12 @@ class DBStorage:
         try:
             query_results = []
             # query_results.extend(self.__session.query(User).all())
-            # query_results.extend(self.__session.query(Place).all())
-            # query_results.extend(self.__session.query(State).all())
-            query_results.extend(self.__session.query(City).all())
+            try:
+                query_results.extend(self.__session.query(Place).all())
+                query_results.extend(self.__session.query(State).all())
+                query_results.extend(self.__session.query(City).all())
+            except:
+                print("dv storage place not working")
             # query_results.extend(self.__session.query(Amenity).all())
             # query_results.extend(self.__session.query(Review).all())
             new_dict = {}
@@ -84,9 +88,9 @@ class DBStorage:
         """commits current state of session to the database"""
         try:
             if obj:
-                self.__session.add()
+                self.__session.add(obj)
         except:
-            print("new does not work")
+            print(" FILE DB STORAGE, new does not work")
 
     def save(self):
         """commits current instance to the database"""
@@ -98,21 +102,8 @@ class DBStorage:
     def reload(self):
         """  """
         from models.base_model import Base
-        print(self.__engine)
-        try:
-            Base.metadata.create_all(self.__engine)
-        except:
-            print("1")
-        try:
-            Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        except:
-            print("2")
-        try:
-            willy = scoped_session(Session)
-        except:
-            print("3")
-        try:
-            self.__session = willy
-        except:
-            print("4")
+        Base.metadata.create_all(self.__engine)
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        willy = scoped_session(Session)
+        self.__session = willy
         

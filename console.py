@@ -115,39 +115,44 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        args = args.split(' ')
-        if not args:
-            print("** class name missing **")
-            return
-        elif args[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args[0]]()
-        value = None
-        attr = None
-        for item in range(1, len(args)):
-            word = args[item].split('=')
-            
-            if len(word) == 2:
-                attr = word[0]
-                value = word[1]
-                try:
+        print("Create being called")
+        try:
+            args = args.split(' ')
+            if not args:
+                print("** class name missing **")
+                return
+            elif args[0] not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            new_instance = HBNBCommand.classes[str(args[0])]()
+            value = None
+            attr = None
+            for item in range(1, len(args)):
+                add_attr = True
+                word = args[item].split('=')
+                if len(word) == 2:
+                    attr = word[0]
+                    value = word[1]
                     if value[0] == '"' and value[len(value) - 1] == '"':
                         value = value.split('"')
                         value = value[1]
                         value = value.replace("_", " ")
                         value = value.replace('"', r'\"')
-        
                     elif '.' in value:
                         value = float(value)
                     else:
-                        value = int(value)
-                    setattr(new_instance, attr, value)
-                except:
-                    pass
-        print(new_instance.id)
-        new_instance.save()
-                # print("{}, {}, {}".format(new_instance, attr, value))
+                        try:
+                            value = int(value)
+                        except:
+                            add_attr = False
+                    if add_attr:
+                        setattr(new_instance, attr, value)
+            
+            print(new_instance.id)
+            new_instance.save()
+          
+        except:
+            print("Console not working")
 
     def help_create(self):
         """ Help information for the create method """
@@ -246,7 +251,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all().items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)
