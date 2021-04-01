@@ -14,10 +14,11 @@ try:
                           Column('amenity_id', String(60),
                                  ForeignKey('amenities.id'),
                                  primary_key=True,
-                                 nullable=False)
-                        )
+                                 nullable=False))
+
 except:
     print("place amenity did not work")
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -37,11 +38,12 @@ class Place(BaseModel, Base):
         print("place did not create")
     try:
         amenity_ids = relationship("Amenity", secondary=place_amenity,
-                             viewonly=False)
+                                   viewonly=False)
     except:
         print("amen id does not work")
     try:
-        reviews = relationship("Review", cascade="all, delete", backref="place")
+        reviews = relationship("Review",
+                               cascade="all, delete", backref="place")
     except:
         print("revews does not work")
     # amenities = relationship("Amenity", secondary=place_amenity,
@@ -59,4 +61,3 @@ class Place(BaseModel, Base):
                 self.amenity_ids.append(obj.id)
     except:
         print("setter not working")
-
