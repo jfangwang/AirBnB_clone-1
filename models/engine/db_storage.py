@@ -47,9 +47,7 @@ class DBStorage:
         self.reload()
 
         if HBNB_ENV == "test":
-                Base.metadata.drop_all(self.__engine)
-        except:
-            print("Could not init session from db")
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Returns dictionary result query of all
