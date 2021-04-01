@@ -3,6 +3,7 @@
 This module instantiates an object of class FileStorage or BDStorage
 """
 
+
 from os import getenv
 
 if getenv("HBNB_TYPE_STORAGE") == "db":
@@ -14,5 +15,3 @@ else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
     storage.reload()
-
-      
