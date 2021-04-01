@@ -146,12 +146,9 @@ class HBNBCommand(cmd.Cmd):
                         add_attr = False
                 if add_attr:
                     setattr(new_instance, attr, value)
-        
+
         print(new_instance.id)
         new_instance.save()
-          
-        # except:
-        #     print("Console not working")
 
     def help_create(self):
         """ Help information for the create method """
