@@ -11,7 +11,7 @@ from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
-# from models.amenity import Amenity
+from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -64,12 +64,11 @@ class DBStorage:
                 query_results.extend(self.__session.query(Place).all())
                 query_results.extend(self.__session.query(State).all())
                 query_results.extend(self.__session.query(City).all())
-                # query_results.extend(self.__session.query(Amenity).all())
+                query_results.extend(self.__session.query(Amenity).all())
                 query_results.extend(self.__session.query(Review).all())
             except:
                 print("dv storage place not working")
           
-            # query_results.extend(self.__session.query(Review).all())
             new_dict = {}
             for obj in query_results:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
