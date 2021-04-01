@@ -18,13 +18,12 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 # will not need if array.extend(iterable) method for session query list
 
-classes = {"Place": Place, "City": City, "State": State, "User": User, "Review": Review, "Amenity": Amenity}
-    # "User": User,
-           
-    #        
-           
-        #    "Amenity": Amenity,
-        #    "Review": Review}
+classes = {"Place": Place,
+           "City": City,
+           "State": State,
+           "User": User,
+           "Review": Review,
+           "Amenity": Amenity}
 
 
 class DBStorage:
@@ -34,21 +33,20 @@ class DBStorage:
 
     def __init__(self):
         """Instance of session and db_ojbect """
-        try:
-            HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
-            HBNB_MYSQL_PWD = os.getenv('HBNB_MYSQL_PWD')
-            HBNB_MYSQL_HOST = os.getenv('HBNB_MYSQL_HOST')
-            HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
-            HBNB_ENV = os.getenv('HBNB_TYPE_STORAGE')
-            self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                        format(HBNB_MYSQL_USER,
-                                                HBNB_MYSQL_PWD,
-                                                HBNB_MYSQL_HOST,
-                                                HBNB_MYSQL_DB),
-                                        pool_pre_ping=True)
-            # self.reload()
+        HBNB_MYSQL_USER = os.getenv('HBNB_MYSQL_USER')
+        HBNB_MYSQL_PWD = os.getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_HOST = os.getenv('HBNB_MYSQL_HOST')
+        HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
+        HBNB_ENV = os.getenv('HBNB_TYPE_STORAGE')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(HBNB_MYSQL_USER,
+                                             HBNB_MYSQL_PWD,
+                                             HBNB_MYSQL_HOST,
+                                             HBNB_MYSQL_DB),
+                                      pool_pre_ping=True)
+        self.reload()
 
-            if HBNB_ENV == "test":
+        if HBNB_ENV == "test":
                 Base.metadata.drop_all(self.__engine)
         except:
             print("Could not init session from db")
@@ -56,26 +54,18 @@ class DBStorage:
     def all(self, cls=None):
         """Returns dictionary result query of all
         models currently in storage"""
-        try:
-            query_results = []
-            
-            try:
-                query_results.extend(self.__session.query(User).all())
-                query_results.extend(self.__session.query(Place).all())
-                query_results.extend(self.__session.query(State).all())
-                query_results.extend(self.__session.query(City).all())
-                query_results.extend(self.__session.query(Amenity).all())
-                query_results.extend(self.__session.query(Review).all())
-            except:
-                print("dv storage place not working")
-          
-            new_dict = {}
-            for obj in query_results:
-                key = "{}.{}".format(type(obj).__name__, obj.id)
-                new_dict[key] = obj
-            return new_dict
-        except:
-            print("all did not work")
+        query_results = []
+        query_results.extend(self.__session.query(User).all())
+        query_results.extend(self.__session.query(Place).all())
+        query_results.extend(self.__session.query(State).all())
+        query_results.extend(self.__session.query(City).all())
+        query_results.extend(self.__session.query(Amenity).all())
+        query_results.extend(self.__session.query(Review).all())
+        new_dict = {}
+        for obj in query_results:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            new_dict[key] = obj
+        return new_dict
 
     def close(self):
         """close current session"""
@@ -108,4 +98,3 @@ class DBStorage:
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         willy = scoped_session(Session)
         self.__session = willy
-        
