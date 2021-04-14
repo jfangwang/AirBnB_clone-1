@@ -90,9 +90,9 @@ class DBStorage:
             print("DB Storage save does not work")
 
     def reload(self):
-        """  """
+        """create all tables in the database in current database session"""
         from models.base_model import Base
         Base.metadata.create_all(self.__engine)
-        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        willy = scoped_session(Session)
-        self.__session = willy
+        curr_session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(curr_session)
+        self.__session = Session
