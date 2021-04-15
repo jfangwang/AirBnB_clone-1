@@ -1,17 +1,22 @@
 #!/usr/bin/python3
 # distribute archive file
 import os.path
-from fabric.api import local
 from fabric.api import put
 from fabric.api import env
 from fabric.api import run
-from datetime import datetime
 
 env.hosts = ["34.75.56.162", "35.237.17.44"]
 
 
 def do_deploy(archive_path):
-    """deploy"""
+    """do_deploy
+
+    Args:
+        archive_path (str): archive path
+
+    Returns:
+        Boolean: True or False
+    """    
     if not os.path.isfile(archive_path):
         return False
     file_name = archive_path.split("/")[-1]
