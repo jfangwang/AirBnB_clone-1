@@ -16,7 +16,7 @@ def do_deploy(archive_path):
 
     Returns:
         Boolean: True or False
-    """    
+    """
     if not os.path.isfile(archive_path):
         return False
     file_name = archive_path.split("/")[-1]
