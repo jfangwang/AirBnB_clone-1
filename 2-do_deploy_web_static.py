@@ -22,11 +22,11 @@ def do_deploy(archive_path):
     file_name = archive_path.split("/")[-1]
     name = file_name.split(".")[0]
 
-    if put(archive_path, "tmp/{}".format(file_name)).failed:
+    if put(archive_path, "/tmp/{}".format(file_name)).failed:
         return False
-    if run("mkdir -p /data/web_static/releases/{}".format(file_name)).failed:
+    if run("mkdir -p /data/web_static/releases/{}/".format(file_name)).failed:
         return False
-    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".
+    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
            format(file_name, file_name)).failed:
         return False
     if run("rm /tmp/{}".format(file_name)).failed:
