@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Setup static
 sudo apt-get update
-sudo apt-get install nginx
+sudo apt-get install -y nginx
 [[ ! -d /data ]] && sudo mkdir /data
 [[ ! -d /data/web_static ]] && sudo mkdir /data/web_static
 [[ ! -d /data/web_static/releases ]] && sudo mkdir /data/web_static/releases
