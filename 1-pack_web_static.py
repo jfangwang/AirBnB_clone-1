@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 # Fab File first try
 import os.path
 from fabric.api import local
@@ -21,4 +21,3 @@ def do_pack():
     except:
         return None
     return file_name
-        
