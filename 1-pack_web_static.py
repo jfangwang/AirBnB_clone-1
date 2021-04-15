@@ -8,7 +8,7 @@ from datetime import datetime
 def do_pack():
     """Creating a tgz file archive"""
     date = datetime.now().strftime("%Y%m%d%H%M%S")
-    file_name = "web_static_{}.tgz".format(date)
+    file_name = "versions/web_static_{}.tgz".format(date)
     if os.path.isdir("versions"):
         pass
     else:
