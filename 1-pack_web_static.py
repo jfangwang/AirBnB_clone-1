@@ -1,6 +1,6 @@
 #/usr/bin/python3
 # Fab File first try
-from fabric.api import *
+from fabric.api import local
 from datetime import datetime
 
 
@@ -16,7 +16,7 @@ def do_pack():
         except:
             return None
     try:
-        local("tar -cvzf {}.tgz".format(file_name))
+        local("tar -cvzf {} web_static".format(file_name))
     except:
         return None
     return file_name
