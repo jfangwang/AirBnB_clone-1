@@ -1,5 +1,6 @@
 #/usr/bin/python3
 # Fab File first try
+import os.path
 from fabric.api import local
 from datetime import datetime
 
@@ -7,7 +8,7 @@ from datetime import datetime
 def do_pack():
     """Creating a tgz file archive"""
     date = datetime.now().strftime("%Y%m%d%H%M%S")
-    file_name = "web_static_{}{}{}{}{}{}.tgz".format(date)
+    file_name = "web_static_{}.tgz".format(date)
     if os.path.isdir("versions"):
         pass
     else:
