@@ -19,3 +19,4 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
 sudo sed -i '51i\\tlocation \/hbnb_static {alias /data/web_static/current;}' /etc/nginx/sites-available/default
 sudo service nginx restart
+exit $?
