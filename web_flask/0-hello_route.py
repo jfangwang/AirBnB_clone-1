@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-# save this as app.py
-from flask import Flask, escape, request
-
+# Flask setup
+from flask import Flask
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    name = request.args.get("name", "World")
-    return ('Hello, {escape(name)}!')
+
+@app.route('/', strict_slashes=False)
+def hello_world():
+    """ hello world """
+    return 'Hello HBNB!'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
