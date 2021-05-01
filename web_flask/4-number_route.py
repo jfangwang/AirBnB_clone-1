@@ -35,7 +35,7 @@ def python_text(text="is cool"):
 def number_text(n):
     """hello number"""
     if n.isdecimal():
-        return n + " is a number"
+        return str(n) + " is a number"
 
 
 if __name__ == '__main__':
