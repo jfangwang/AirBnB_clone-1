@@ -31,11 +31,10 @@ def python_text(text="is cool"):
     return "Python " + text
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def number_text(n):
     """hello number"""
-    if n.isdecimal():
-        return str(n) + " is a number"
+    return str(n) + " is a number"
 
 
 if __name__ == '__main__':
