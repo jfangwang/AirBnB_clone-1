@@ -18,7 +18,8 @@ def state_list():
     """hello even or odd number"""
     states = storage.all("State")
     cities = storage.all("City")
-    return render_template("8-cities_by_states.html", states=states, cities=cities)
+    return render_template("8-cities_by_states.html", states=states,
+                           cities=cities)
 
 
 @app.teardown_appcontext

@@ -13,7 +13,14 @@ from models import storage
 app = Flask(__name__)
 
 
-@app.route('/cities_by_states', strict_slashes=False)
+@app.route('/states', strict_slashes=False)
+def state_list():
+    """hello even or odd number"""
+    states = storage.all("State")
+    return render_template("9-states.html", states=states)
+
+
+@app.route('/states/<int:id>', strict_slashes=False)
 def state_list():
     """hello even or odd number"""
     states = storage.all("State")
