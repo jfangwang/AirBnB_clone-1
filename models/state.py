@@ -19,7 +19,7 @@ class State(BaseModel, Base):
             """getter attr"""
             from models import storage
             new_list = []
-            for key, val in storage.all(City).items():
+            for key, value in storage.all(City).items():
                 if value.to_dict()['state_id'] == self.id:
                     new_list.append(value)
             return new_list

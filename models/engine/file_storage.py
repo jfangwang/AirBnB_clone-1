@@ -69,4 +69,4 @@ class FileStorage:
 
     def close(self):
         """Method for deserialization"""
-        self.reload()
+        reload(self)
