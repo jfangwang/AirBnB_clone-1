@@ -14,17 +14,20 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
-def state_list():
-    """hello even or odd number"""
-    states = storage.all("State")
-    return render_template("9-states.html", states=states)
+def state():
+    """hello states"""
+    states = storage.all(State)
+    return render_template("9-states.html", states_list=states)
 
 
 @app.route('/states/<int:id>', strict_slashes=False)
-def state_list():
-    """hello even or odd number"""
-    states = storage.all("State")
-    return render_template("9-states.html", states=states)
+def state_number():
+    """hello number"""
+    try:
+        state = storage.all()["State.{}".format(id)]
+        return render_template('9-states.html', state=state)
+    except KeyError:
+        return render_template("9-states.html")
 
 
 @app.teardown_appcontext
