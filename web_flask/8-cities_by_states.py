@@ -16,8 +16,8 @@ app = Flask(__name__)
 @app.route('/cities_by_states', strict_slashes=False)
 def state_list():
     """hello even or odd number"""
-    states = storage.all("State")
-    cities = storage.all("City")
+    states = storage.all(State)
+    cities = storage.all(City)
     return render_template("8-cities_by_states.html", states=states,
                            cities=cities)
 
