@@ -20,8 +20,8 @@ def state():
     return render_template("9-states.html", states_list=states)
 
 
-@app.route('/states/<int:id>', strict_slashes=False)
-def state_number():
+@app.route('/states/<id>', strict_slashes=False)
+def state_number(id):
     """hello number"""
     try:
         state = storage.all()["State.{}".format(id)]
